@@ -1,18 +1,24 @@
-const lat = "";
-const long = "";
-
-$("#click-me").on("click", function () {
+$("#locate-me").on("click", function () {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
-      lat = position.coords.latitude;
-      long = position.coords.longitude;
+      const lat = position.coords.latitude;
+      const long = position.coords.longitude;
 
-      const coordinates = {lat, long}
-      
+      $("#coords").text(`latitude: ${lat} longitude: ${long}`);
+      const data = { latitude: lat, longitude: long };
+
+      console.log("success " + JSON.stringify(data));
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }
+      fetch('/locate', options)
     });
-  }
-  else{
-      console.log("unable to get location")
+  } else {
+    console.log("unable to get location");
   }
 });
-

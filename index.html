@@ -13,10 +13,12 @@
       crossorigin="anonymous"
     />
     <!-- Custom Style -->
-    <link rel="stylesheet" href="/css/styles.css" />
-    <title>Hello, world!</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Weather4Today</title>
   </head>
   <body>
+    <h1 id="coords"></h1>
+
     <div
       class="card bg-light position-absolute top-50 start-50 translate-middle"
     >
@@ -35,8 +37,13 @@
           <button type="submit" class="btn btn-outline-success">Go</button>
 
           <p class="text-center mt-3">Or you can let us locate you instead</p>
+        </form>
+
+        <form action="/locate" method="POST">
           <div class="container d-flex justify-content-center">
-            <button id="locate-me" class="btn btn-primary">Locate me!</button>
+            <button type="submit" id="locate-me" class="btn btn-primary">
+              Locate me!
+            </button>
           </div>
         </form>
       </div>
