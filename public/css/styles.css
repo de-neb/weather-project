@@ -1,3 +1,218 @@
-.card-bg{
-    background: #a3d8f4;
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@500&family=Montserrat:wght@500&display=swap");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300 !important;
+  background: none;
+  color: #fff;
+}
+
+.wi {
+  font-size: 8rem;
+}
+
+.bg-cover {
+  background: url("../images/day.png") no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.night {
+  background: url("../images/night.png") no-repeat center center;
+  background-size: cover;
+}
+
+.bg-opacity {
+  position: absolute;
+  width: 85vw !important;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  padding: 20px 0;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background: #23113171;
+  z-index: -1;
+  border-radius: 20px;
+}
+
+.container-fluid {
+  color: white;
+}
+
+.container-fluid h1 {
+  font-size: 4.5rem;
+  font-weight: 400;
+  font-family: "Dosis", sans-serif;
+}
+
+.container-fluid form {
+  min-width: 200px;
+  height: 55px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.container-fluid form .search-box {
+  height: 100%;
+  width: inherit;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  border-bottom: 3px solid #fff;
+  padding: 0;
+}
+
+.container-fluid form .search-box input[type="text"] {
+  background: transparent;
+  border: none;
+  outline: none;
+  height: 100%;
+  width: 90%;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.container-fluid form .search-box input[type="text"]::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.767);
+}
+
+.container-fluid form .search-box input[type="text"]:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.767);
+}
+
+.container-fluid form .search-box input[type="text"]::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.767);
+}
+
+.container-fluid form .search-box input[type="text"]::placeholder {
+  color: rgba(255, 255, 255, 0.767);
+}
+
+.container-fluid form .search-box input[type="text"]:focus, .container-fluid form .search-box input[type="text"]:active {
+  background: transparent;
+}
+
+.container-fluid form .search-box button {
+  background: none;
+  border: none;
+  outline: none;
+  color: inherit;
+}
+
+.container-fluid form .search-box button span {
+  font-size: 2rem;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.container-fluid #locate-me {
+  background: none;
+  border: none;
+  outline: none;
+  height: 55px;
+}
+
+.container-fluid #locate-me span {
+  font-size: 2rem;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  color: crimson;
+}
+
+.border-side {
+  background: #fff;
+  width: 2px;
+  height: inherit;
+}
+
+.switch-body {
+  position: relative;
+  width: 90px;
+  height: 30px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 0 2px #fff;
+          box-shadow: 0 0 0 2px #fff;
+  padding: 3px 5px;
+}
+
+.switch-body input[type="checkbox"] {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  z-index: 2;
+}
+
+.switch-body input[type="checkbox"]:not(:checked) ~ .switch {
+  left: 0;
+  -webkit-transition: left 0.5s cubic-bezier(0, 1.13, 0, 0.99);
+  transition: left 0.5s cubic-bezier(0, 1.13, 0, 0.99);
+}
+
+.switch-body input[type="checkbox"]:not(:checked) ~ .switch::after {
+  content: "C";
+}
+
+.switch-body input[type="checkbox"]:checked ~ .switch {
+  border-radius: 0 5px 5px 0;
+  left: 45px;
+  -webkit-transition: left 0.5s cubic-bezier(0, 1.13, 0, 0.99);
+  transition: left 0.5s cubic-bezier(0, 1.13, 0, 0.99);
+}
+
+.switch-body input[type="checkbox"]:checked ~ .switch::after {
+  content: "F";
+}
+
+.switch-body .switch {
+  border-radius: 5px 0 0 5px;
+  background: #fff;
+  color: #000;
+  width: 50%;
+  height: inherit;
+  position: absolute;
+  top: 0;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  font-family: "Dosis", sans-serif;
+}
+
+@media (max-width: 600px) {
+  .bg-opacity {
+    width: 95vw !important;
+  }
+  .bg-opacity #title {
+    font-size: 3.7rem;
+  }
+}
+/*# sourceMappingURL=styles.css.map */
