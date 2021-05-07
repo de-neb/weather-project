@@ -120,8 +120,14 @@
                       Feels like <%= feelsLike %>
                       <span class="unit"><%= tempUnit %></span>
                     </h3>
-                    <h4>Sunrise <%= sunrise %></h4>
-                    <h4>Sunset <%= sunset %></h4>
+                    <h4>
+                      Sunrise <%= new Date( sunrise * 1000
+                      ).toLocaleTimeString("en-us") %>
+                    </h4>
+                    <h4>
+                      Sunset <%= new Date( sunset * 1000
+                      ).toLocaleTimeString("en-us") %>
+                    </h4>
                   </div>
                 </div>
                 <% } %>
