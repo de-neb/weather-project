@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 
-//get location
+//get location and fetch response
 const locateButton = document.getElementById("locate-me");
 
 locateButton.addEventListener("click", function () {
@@ -24,7 +24,7 @@ locateButton.addEventListener("click", function () {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-      const data = { lat, lon, locatorClicked: true };
+      let data = { lat, lon, locatorClicked: true };
 
       const options = {
         method: "POST",
@@ -62,8 +62,6 @@ locateButton.addEventListener("click", function () {
         } else {
           errorEl.parentNode.insertBefore(dataCont, errorEl.nextSibling);
         }
-
-        console.log("date time", dateTime);
         //chnage bg
       } catch (error) {
         console.log("something went wrong while retrieving response", error);
@@ -88,7 +86,6 @@ function convertTemp() {
     const comma = cityNameText.indexOf(",");
     const cityName = cityNameText.slice(0, comma);
     const requestedUnit = setUnit.checked;
-    console.log("unit", requestedUnit);
 
     if (setUnit.checked) {
       temp.innerHTML = toF(temp.innerHTML) + " " + "°F";

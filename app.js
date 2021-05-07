@@ -24,13 +24,14 @@ app.post("/", function (req, res) {
   // const unit = req.body.requestedUnit ? "imperial" : "metric";
   const unit = "metric";
   const locatorClicked = req.body.locatorClicked;
-  const getJSONData = req.body.getJSONData;
+  const getJSONData = req.body.getJSONData; // not needed
 
   let url = "";
   if (city) {
     url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appId}&units=${unit}`;
     requestData(url, res, unit, getJSONData);
     console.log("data requested through input");
+    console.log("city", city);
   } else if (!city && locatorClicked) {
     const lat = req.body.lat;
     const lon = req.body.lon;
@@ -40,7 +41,6 @@ app.post("/", function (req, res) {
   } else {
     res.send("enter a valid location");
   }
-
   console.log("url", url);
 });
 
