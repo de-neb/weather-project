@@ -9,6 +9,8 @@ body {
   font-weight: 300 !important;
   background: none;
   color: #fff;
+  height: 100vh;
+  width: 100vw;
 }
 
 .wi {
@@ -42,12 +44,13 @@ body {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   background: #23113171;
-  z-index: -1;
   border-radius: 20px;
 }
 
 .container-fluid {
   color: white;
+  overflow-y: auto;
+  max-height: 95vh;
 }
 
 .container-fluid h1 {

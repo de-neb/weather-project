@@ -61,9 +61,9 @@ function requestData(url, res, unit, getJSONData) {
         const country = weatherData.sys.country;
         const place = weatherData.name;
         const icon = weatherData.weather[0].icon;
-        const timezone = ct.getCountry(country).timezones[0];
         const sunrise = weatherData.sys.sunrise;
         const sunset = weatherData.sys.sunset;
+        const timezone = ct.getCountry(country).timezones[0];
         let dateTime = "";
         let iconClass = "";
         let tempUnit = unit === "metric" ? "°C" : "°F";
