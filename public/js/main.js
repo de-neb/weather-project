@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const date = new Date();
   const hour = date.getHours();
 
-  if (hour >= 18) {
+  if (hour >= 18 || hour < 5) {
     document.querySelector("html").classList.add("night");
   } else {
     document.querySelector("html").classList.remove("night");
@@ -48,7 +48,7 @@ locateButton.addEventListener("click", function () {
         const weatherInfo = doc.getElementById("weather-info");
         const dateTime = doc.getElementById("date-time");
         const unitSwitch = doc.getElementById("unit-switch");
-        const dataCont = doc.getElementById("data-cont");
+        let dataCont = doc.getElementById("data-cont");
         //inject inside the html element
         const indexWI = document.getElementById("weather-info");
         const indexDT = document.getElementById("date-time");
@@ -62,13 +62,55 @@ locateButton.addEventListener("click", function () {
         } else {
           errorEl.parentNode.insertBefore(dataCont, errorEl.nextSibling);
         }
-        //chnage bg
+
+        //get DateTime of location
+        getDateTime();
+
+        //convert unix time
+        convertUnix(doc);
       } catch (error) {
         console.log("something went wrong while retrieving response", error);
       }
     });
   } else {
     console.log("unable to get location");
+  }
+});
+
+//send location name to server
+const form = document.getElementById("form");
+
+form.addEventListener("submit", async function (e) {
+  try {
+    e.preventDefault();
+
+    const response = await fetch("/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cityName: this.cityName.value,
+      }),
+    });
+
+    const htmlText = await response.text();
+    let parser = new DOMParser();
+    let doc = parser.parseFromString(htmlText, "text/html");
+
+    const mainContainer = document.getElementById("main-container");
+    const docMainContainer = doc.getElementById("main-container");
+
+    mainContainer.innerHTML = docMainContainer.innerHTML;
+
+    //get DateTime of location
+    getDateTime();
+    //convert unix time
+    convertUnix(doc);
+    //empty text input
+    document.getElementById("cityName").value = "";
+  } catch (error) {
+    console.log(error);
   }
 });
 
@@ -81,11 +123,6 @@ function convertTemp() {
     // setUnit.addEventListener("click", function () {
     const temp = document.getElementById("temp");
     const feelsLike = document.getElementById("feels-like");
-
-    const cityNameText = document.getElementById("location").innerHTML;
-    const comma = cityNameText.indexOf(",");
-    const cityName = cityNameText.slice(0, comma);
-    const requestedUnit = setUnit.checked;
 
     if (setUnit.checked) {
       temp.innerHTML = toF(temp.innerHTML) + " " + "°F";
@@ -109,4 +146,34 @@ function toF(num) {
   const reg = /-?\d+\.?\d*/g;
   const temp = Number(num.match(reg));
   return (temp * (9 / 5) + 32).toFixed(2);
+}
+
+function convertUnix(doc) {
+  let reg = /\d+/g;
+  let docSunrise = doc.getElementById("sunrise").innerHTML.match(reg);
+  let docSunset = doc.getElementById("sunset").innerHTML.match(reg);
+  let sunrise = document.getElementById("sunrise");
+  let sunset = document.getElementById("sunset");
+
+  sunrise.innerHTML =
+    "Sunrise " +
+    new Date(Number(...docSunrise) * 1000).toLocaleTimeString("en-us");
+  sunset.innerHTML =
+    "Sunset " +
+    new Date(Number(...docSunset) * 1000).toLocaleTimeString("en-us");
+}
+
+function getDateTime() {
+  const dateTime = document.getElementById("date-time");
+  let date = new Date();
+  let options = {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: dateTime.innerHTML,
+  };
+  dateTime.innerHTML = date.toLocaleString("en-us", options);
 }

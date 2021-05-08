@@ -21,6 +21,7 @@ app.get("/", function (req, res) {
 
 app.post("/", function (req, res) {
   const city = req.body.cityName;
+  console.log("city", city);
   // const unit = req.body.requestedUnit ? "imperial" : "metric";
   const unit = "metric";
   const locatorClicked = req.body.locatorClicked;
@@ -31,7 +32,6 @@ app.post("/", function (req, res) {
     url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appId}&units=${unit}`;
     requestData(url, res, unit, getJSONData);
     console.log("data requested through input");
-    console.log("city", city);
   } else if (!city && locatorClicked) {
     const lat = req.body.lat;
     const lon = req.body.lon;
@@ -64,7 +64,6 @@ function requestData(url, res, unit, getJSONData) {
         const sunrise = weatherData.sys.sunrise;
         const sunset = weatherData.sys.sunset;
         const timezone = ct.getCountry(country).timezones[0];
-        let dateTime = "";
         let iconClass = "";
         let tempUnit = unit === "metric" ? "°C" : "°F";
 
@@ -74,20 +73,6 @@ function requestData(url, res, unit, getJSONData) {
         } else if (icon.includes("n")) {
           iconClass = `wi wi-owm-night-${weatherData.weather[0].id}`;
         }
-
-        //get date and time
-        let date = new Date();
-        let options = {
-          weekday: "short",
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          timeZone: timezone,
-        };
-
-        dateTime = date.toLocaleString("en-us", options);
 
         const importantData = {
           main,
@@ -99,7 +84,6 @@ function requestData(url, res, unit, getJSONData) {
           temp,
           tempUnit,
           timezone,
-          dateTime,
           status: cod,
           sunrise,
           sunset,
@@ -110,7 +94,7 @@ function requestData(url, res, unit, getJSONData) {
         console.log("html response sent");
       } else {
         res.render("index", {
-          error: "Location not found.",
+          error: "Location not found!",
           status: cod,
         });
       }

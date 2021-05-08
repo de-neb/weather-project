@@ -41,7 +41,7 @@
         <div class="row gap-1 d-flex justify-content-center">
           <div class="col-xxl-7 col-xl-8 col-lg-10 col-md-12 col-12">
             <div class="d-flex align-items-end justify-content-center">
-              <form action="/" method="POST">
+              <form id="form">
                 <label for="cityName"></label>
                 <div class="search-box">
                   <input
@@ -65,72 +65,68 @@
                 </span>
               </button>
             </div>
-            <% if (status !== 200) { %>
-            <h4
-              class="inline-block text-danger fw-bold text-center my-5"
-              id="invalid-location"
-            >
-              <%= error %>
-            </h4>
-            <% } else { %>
-            <div id="data-cont">
-              <div
-                class="d-flex mt-5 unit-cont justify-content-center"
-                id="unit-switch"
+            <div id="main-container">
+              <% if (status !== 200) { %>
+              <h4
+                class="inline-block text-danger fw-bold text-center my-5"
+                id="invalid-location"
               >
-                <div class="switch-body">
-                  <input
-                    type="checkbox"
-                    name="unit"
-                    id="set-unit"
-                    class="set-unit"
-                    onclick="convertTemp()"
-                  />
-                  <div class="switch"></div>
-                </div>
-              </div>
-              <div class="d-flex justify-content-center mt-5">
-                <h2 id="date-time" class="text-center"><%= dateTime %></h2>
-              </div>
-
-              <div class="mt-4" id="weather-info">
+                <%= error %>
+              </h4>
+              <% } else { %>
+              <div id="data-cont">
                 <div
-                  class="row row-cols-12 d-flex justify-content-center justify-content-sm-around"
+                  class="d-flex mt-5 unit-cont justify-content-center"
+                  id="unit-switch"
                 >
-                  <div
-                    class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 d-flex flex-column align-items-center justify-content-center"
-                  >
-                    <i class="<%= iconClass %>" id="weather-icon"></i>
-                    <h3 id="main" class="mt-3"><%= main %></h3>
-                    <h4 id="description" class="text-capitalize">
-                      <%= description %>
-                    </h4>
-                  </div>
-                  <div class="border-side g-0"></div>
-                  <div
-                    class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 d-flex justify-content-center align-items-center flex-column"
-                  >
-                    <h1 id="temp" class="text-nowrap d-inline">
-                      <%= temp %> <span class="unit"><%= tempUnit %></span>
-                    </h1>
-                    <h2 id="location" class="text-center">
-                      <%=place%>, <%=country%>
-                    </h2>
-                    <h3 id="feels-like" class="d-inline">
-                      Feels like <%= feelsLike %>
-                      <span class="unit"><%= tempUnit %></span>
-                    </h3>
-                    <h4>
-                      Sunrise <%= new Date( sunrise * 1000
-                      ).toLocaleTimeString("en-us") %>
-                    </h4>
-                    <h4>
-                      Sunset <%= new Date( sunset * 1000
-                      ).toLocaleTimeString("en-us") %>
-                    </h4>
+                  <div class="switch-body">
+                    <input
+                      type="checkbox"
+                      name="unit"
+                      id="set-unit"
+                      class="set-unit"
+                      onclick="convertTemp()"
+                    />
+                    <div class="switch"></div>
                   </div>
                 </div>
-                <% } %>
+                <div class="d-flex justify-content-center mt-5">
+                  <h2 id="date-time" class="text-center"><%= timezone %></h2>
+                </div>
+
+                <div class="mt-4" id="weather-info">
+                  <div
+                    class="row row-cols-12 d-flex justify-content-center justify-content-sm-around"
+                  >
+                    <div
+                      class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 d-flex flex-column align-items-center justify-content-center"
+                    >
+                      <i class="<%= iconClass %>" id="weather-icon"></i>
+                      <h3 id="main" class="mt-3"><%= main %></h3>
+                      <h4 id="description" class="text-capitalize">
+                        <%= description %>
+                      </h4>
+                    </div>
+                    <div class="border-side g-0"></div>
+                    <div
+                      class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 d-flex justify-content-center align-items-center flex-column"
+                    >
+                      <h1 id="temp" class="text-nowrap d-inline">
+                        <%= temp %> <span class="unit"><%= tempUnit %></span>
+                      </h1>
+                      <h2 id="location" class="text-center">
+                        <%=place%>, <%=country%>
+                      </h2>
+                      <h3 id="feels-like" class="d-inline">
+                        Feels like <%= feelsLike %>
+                        <span class="unit"><%= tempUnit %></span>
+                      </h3>
+                      <h4 id="sunrise">Sunrise <%= sunrise %></h4>
+                      <h4 id="sunset">Sunset <%= sunset %></h4>
+                    </div>
+                  </div>
+                  <% } %>
+                </div>
               </div>
             </div>
           </div>
