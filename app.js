@@ -1,12 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const https = require("https");
 const { urlencoded } = require("body-parser");
 const ct = require("countries-and-timezones");
 var path = require("path");
 const { text } = require("express");
-
-//appId
-const appId = "5b72839387d0a15411beea5e9048cf8f";
 
 // server response
 const app = express();
@@ -18,6 +16,8 @@ app.set("view engine", "ejs");
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
+
+const appId = process.env.API_KEY;
 
 app.post("/", function (req, res) {
   const city = req.body.cityName;
