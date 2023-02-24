@@ -17,12 +17,21 @@ body {
   text-shadow: 2px 2px rgb(36, 31, 51);
 }
 
+#bg-video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .wi {
   font-size: 8rem;
 }
 
 .bg-cover {
-  background: url("../images/day.png") no-repeat center center;
+  // background: url("../images/day.png") no-repeat center center;
   background-size: cover;
   width: 100%;
   height: 100%;
@@ -32,19 +41,19 @@ body {
 }
 
 .night {
-  background: url("../images/night.png") no-repeat center center;
+  // background: url("../images/night.png") no-repeat center center;
   background-size: cover;
 }
 
 .bg-opacity {
   position: absolute;
-  width: 85vw !important;
+  width: 50vw;
   height: max-content;
   padding: 20px 0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #23113171;
+  background: #e7e7e741;
   border-radius: 20px;
 }
 
@@ -175,12 +184,35 @@ body {
 
 // ------------------ //
 
-@media (max-width: 600px) {
+@media (max-width: 1100px) {
   .bg-opacity {
     width: 95vw !important;
-
+    padding: 2rem;
+    margin-bottom: 3rem;
     #title {
-      font-size: 3.7rem;
+      font-size: 3rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bg-opacity {
+    padding: 0.5rem;
+    margin-bottom: 3rem;
+  }
+  .search-box {
+    input[type="text"] {
+      font-size: 1.2rem;
+    }
+  }
+  #weather-icon {
+    font-size: 4rem;
+  }
+  .container-fluid {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    h1 {
+      font-size: 3rem;
     }
   }
 }

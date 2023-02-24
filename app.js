@@ -9,7 +9,7 @@ const { text } = require("express");
 // server response
 const app = express();
 app.use(urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static("public")); //path.join(__dirname, "/public"))
 app.use(express.json({ limit: "1mb" }));
 app.set("view engine", "ejs");
 
@@ -27,21 +27,26 @@ app.post("/", function (req, res) {
   const locatorClicked = req.body.locatorClicked;
   const getJSONData = req.body.getJSONData; // not needed
 
-  let url = "";
-  if (city) {
-    url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appId}&units=${unit}`;
-    requestData(url, res, unit, getJSONData);
-    console.log("data requested through input");
-  } else if (!city && locatorClicked) {
-    const lat = req.body.lat;
-    const lon = req.body.lon;
-    url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appId}&units=${unit}`;
-    requestData(url, res, unit, getJSONData);
-    console.log("getting location using gps");
-  } else {
-    res.send("enter a valid location");
+  try {
+    let url = "";
+    if (city) {
+      url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appId}&units=${unit}`;
+      requestData(url, res, unit, getJSONData);
+      console.log("data requested through input");
+    } else if (!city && locatorClicked) {
+      const lat = req.body.lat;
+      const lon = req.body.lon;
+      url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appId}&units=${unit}`;
+      requestData(url, res, unit, getJSONData);
+      console.log("getting location using gps");
+    } else {
+      res.send("enter a valid location");
+    }
+    console.log("url", url);
+  } catch (error) {
+    console.log({ error });
+    res.send("Failed to fetch data");
   }
-  console.log("url", url);
 });
 
 function requestData(url, res, unit, getJSONData) {
@@ -52,6 +57,7 @@ function requestData(url, res, unit, getJSONData) {
     apiRes.on("data", function (data) {
       // when data is received convert the it to js object and get necessary values
       const weatherData = JSON.parse(data);
+      console.log("weather data", weatherData);
       const cod = weatherData.cod;
       if (cod == 200) {
         const temp = weatherData.main.temp;
@@ -102,6 +108,7 @@ function requestData(url, res, unit, getJSONData) {
   });
 }
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Server is running in port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Running at port ${port}`);
 });

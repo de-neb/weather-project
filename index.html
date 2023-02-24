@@ -33,6 +33,7 @@
     <title>Weather4Today</title>
   </head>
   <body>
+    <video autoplay muted loop id="bg-video" src="/videos/day.mp4"></video>
     <div class="bg-opacity">
       <h1 id="coords"></h1>
 
@@ -40,7 +41,7 @@
         <h1 class="mb-3 text-center" id="title">WEATHER TODAY</h1>
 
         <div class="row gap-1 d-flex justify-content-center mt-3">
-          <div class="col-xxl-7 col-xl-8 col-lg-10 col-md-12 col-12">
+          <div class="col-md-12 col-12">
             <div class="d-flex align-items-end justify-content-center mt-3">
               <form id="form">
                 <label for="cityName"></label>
@@ -68,10 +69,20 @@
             </div>
             <div id="main-container">
               <div
+                class="d-flex justify-content-center align-items-center p-5 visually-hidden"
+                id="spinner"
+              >
+                <div
+                  class="spinner-grow"
+                  style="width: 3rem; height: 3rem"
+                  role="status"
+                ></div>
+              </div>
+              <div
                 id="invalid-location"
                 class="inline-block text-danger fw-bold text-center my-5"
               ></div>
-              <div id="data-cont">
+              <div id="data-cont" class="placeholder">
                 <div
                   class="d-flex mt-5 unit-cont justify-content-center"
                   id="unit-switch"

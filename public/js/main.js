@@ -1,13 +1,6 @@
 //change bg based on time of the day
 document.addEventListener("DOMContentLoaded", function (event) {
-  const date = new Date();
-  const hour = date.getHours();
-
-  if (hour >= 18 || hour < 5) {
-    document.querySelector("html").classList.add("night");
-  } else {
-    document.querySelector("html").classList.remove("night");
-  }
+  setBackground();
 });
 
 //get location and fetch response
@@ -35,8 +28,18 @@ locateButton.addEventListener("click", function () {
         body: JSON.stringify(data),
       };
 
+      //loading state
+      const dataCont = document.getElementById("data-cont");
+      const spinner = document.getElementById("spinner");
+      console.log({
+        spinner,
+        dataCont: dataCont.classList,
+      });
+
       //sending and getting data to server
       try {
+        spinner.classList.remove("visually-hidden");
+        dataCont.classList.add("visually-hidden");
         const url = await fetch("/", options);
         //response from server
         const html = await url.text();
@@ -48,7 +51,6 @@ locateButton.addEventListener("click", function () {
         const weatherInfo = doc.getElementById("weather-info");
         const dateTime = doc.getElementById("date-time");
         const unitSwitch = doc.getElementById("unit-switch");
-        let dataCont = doc.getElementById("data-cont");
         //inject inside the html element
         const indexWI = document.getElementById("weather-info");
         const indexDT = document.getElementById("date-time");
@@ -65,12 +67,17 @@ locateButton.addEventListener("click", function () {
 
         //get DateTime of location
         getDateTime();
-
+        //change bg
+        setBackground();
         //convert unix time
         convertUnix(doc);
       } catch (error) {
         console.log("something went wrong while retrieving response", error);
       }
+
+      //stop loading state
+      spinner.classList.add("visually-hidden");
+      dataCont.classList.remove("visually-hidden");
     });
   } else {
     console.log("unable to get location");
@@ -81,8 +88,14 @@ locateButton.addEventListener("click", function () {
 const form = document.getElementById("form");
 
 form.addEventListener("submit", async function (e) {
+  const spinner = document.getElementById("spinner");
+  const dataCont = document.getElementById("data-cont");
+
   try {
     e.preventDefault();
+
+    spinner.classList.remove("visually-hidden");
+    dataCont.classList.add("visually-hidden");
 
     const response = await fetch("/", {
       method: "POST",
@@ -105,6 +118,8 @@ form.addEventListener("submit", async function (e) {
 
     //get DateTime of location
     getDateTime();
+    //change bg
+    setBackground();
     //convert unix time
     convertUnix(doc);
     //empty text input
@@ -112,6 +127,9 @@ form.addEventListener("submit", async function (e) {
   } catch (error) {
     console.log(error);
   }
+
+  spinner.classList.add("visually-hidden");
+  dataCont.classList.remove("visually-hidden");
 });
 
 //change temp unit
@@ -176,4 +194,30 @@ function getDateTime() {
     timeZone: dateTime.innerHTML,
   };
   dateTime.innerHTML = date.toLocaleString("en-us", options);
+  return date.toLocaleString("en-us", options);
+}
+
+function setBackground() {
+  const dateTime = document.getElementById("date-time");
+  const date = new Date(dateTime.innerHTML);
+  const hour = date.getHours();
+  const mainStatus = document.getElementById("main")
+    ? document.getElementById("main").innerHTML
+    : "";
+  if (hour >= 18 || hour < 5) {
+    document
+      .getElementById("bg-video")
+      .setAttribute("src", "/videos/night.mp4");
+  } else {
+    document.getElementById("bg-video").setAttribute("src", "/videos/day.mp4");
+  }
+  if (
+    mainStatus == "Rain" ||
+    mainStatus == "Thunderstorm" ||
+    mainStatus == "Snow"
+  ) {
+    document
+      .getElementById("bg-video")
+      .setAttribute("src", `/videos/${mainStatus.toLowerCase()}.mp4`);
+  }
 }
